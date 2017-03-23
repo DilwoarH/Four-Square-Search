@@ -22,4 +22,18 @@ describe('SearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have p tag with the word "Search Location"', async(() => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('p').textContent).toContain('Search Location');
+  }));
+
+  it('should have input field with id #search', async(() => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#search'));
+  }));
 });
