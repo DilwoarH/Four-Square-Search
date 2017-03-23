@@ -27,6 +27,6 @@ describe('HeaderComponent', () => {
     const fixture = TestBed.createComponent(HeaderComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Four Square Search!');
+    expect(compiled.querySelector('h1').textContent).toContain('Four Square Search');
   }));
 });
