@@ -34,6 +34,6 @@ describe('SearchComponent', () => {
     const fixture = TestBed.createComponent(SearchComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#search'));
+    expect(compiled.querySelector('#search')).toBe(true);
   }));
 });
