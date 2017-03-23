@@ -22,4 +22,11 @@ describe('MapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a #map iframe', async(() => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#map'));
+  }));
 });
