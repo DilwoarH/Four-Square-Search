@@ -27,6 +27,6 @@ describe('MapComponent', () => {
     const fixture = TestBed.createComponent(MapComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#map')).toBe(true);
+    expect(compiled.querySelector('#map').tagName).toBe('IFRAME');
   }));
 });

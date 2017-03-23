@@ -27,6 +27,6 @@ describe('FooterComponent', () => {
     const fixture = TestBed.createComponent(FooterComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('footer'));
+    expect(compiled.querySelector('footer').tagName).toBe('FOOTER');
   }));
 });
