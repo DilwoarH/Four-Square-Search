@@ -10,5 +10,5 @@ import { MapComponent } from './map/map.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Four Square Search!';
+  title = 'Four Square Search';
 }

@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'FourSquareSearch'`, async(() => {
+  it(`should have as title 'Four Square Search'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('FourSquareSearch');
+    expect(app.title).toEqual('Four Square Search');
   }));
 
 });
