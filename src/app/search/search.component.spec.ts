@@ -36,4 +36,11 @@ describe('SearchComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('#search').tagName).toBe('INPUT');
   }));
+
+  it('should have button with id #triggerSearch', async(() => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#triggerSearch').tagName).toBe('BUTTON');
+  }));
 });
