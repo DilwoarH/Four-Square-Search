@@ -24,7 +24,7 @@ describe('MapComponent', () => {
   });
 
   it('should have a #map iframe', async(() => {
-    const fixture = TestBed.createComponent(SearchComponent);
+    const fixture = TestBed.createComponent(MapComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('#map'));
