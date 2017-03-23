@@ -24,7 +24,7 @@ describe('FooterComponent', () => {
   });
 
   it('should have a footer tag', async(() => {
-    const fixture = TestBed.createComponent(SearchComponent);
+    const fixture = TestBed.createComponent(FooterComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('footer'));
