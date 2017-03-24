@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FourSquareService } from '../four-square.service';
 
 declare var L: any;
+declare var document: any;
 
 @Component({
   selector: 'app-map',
@@ -24,6 +25,13 @@ export class MapComponent implements OnInit {
     userLat: null,
     userLng: null
   };
+  private defaultSettings = {
+    lat: "51.505",
+    lng: "-0.09",
+    initZoom: 10,
+    zoom: 14,
+    maxZoom: 19
+  };
 
   ngOnInit() {
     this.initMap();
@@ -31,12 +39,12 @@ export class MapComponent implements OnInit {
 
   initMap() {
 
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    this.map = L.map('map').setView([this.defaultSettings.lat, this.defaultSettings.lng], this.defaultSettings.initZoom);
 
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
       subdomains: 'abcd',
-      maxZoom: 19
+      maxZoom: this.defaultSettings.maxZoom
     }).addTo(this.map);
 
     this.search();
@@ -76,7 +84,7 @@ export class MapComponent implements OnInit {
 
             _this.map.addLayer(_this.userLocationInfo.userMarker);
             _this.map.addLayer(_this.userLocationInfo.userCircle);
-            _this.map.setZoom( 15 );
+            _this.map.setZoom( _this.defaultSettings.zoom );
 
             _this.search( _this.userLocationInfo.userLat, _this.userLocationInfo.userLng );
         })
@@ -86,7 +94,13 @@ export class MapComponent implements OnInit {
         });
   }
 
-  search( lat = "51.505", lng = "-0.09", search = "" ) {
+  searchBtnClicked()
+  {
+    var searchText = document.getElementById('search').value;
+    this.search(this.defaultSettings.lat,this.defaultSettings.lng,searchText);
+  }
+
+  search( lat = this.defaultSettings.lat, lng = this.defaultSettings.lng, search = "" ) {
     this.fourSquareService
       .getVenues(lat, lng, search)
       .subscribe(
@@ -100,7 +114,7 @@ export class MapComponent implements OnInit {
     this.processData( response.response.groups[0].items );
     var center_lat =  ( response.response.geocode ? response.response.geocode.center.lat : lat);
     var center_lng =  ( response.response.geocode ? response.response.geocode.center.lng : lng);
-    this.map.setView( [ center_lat , center_lng ], 16 );
+    this.map.setView( [ center_lat , center_lng ], this.defaultSettings.zoom );
   }
 
   processData( venues ) {
