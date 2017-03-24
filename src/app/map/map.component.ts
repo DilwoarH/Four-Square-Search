@@ -1,25 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { FourSquareService } from '../four-square.service';
 
 declare var L: any;
-
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
+  providers: [ FourSquareService ]
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+        public fourSquareService: FourSquareService 
+  ) { }
 
-  map = null;
+  public map = null;
   
-  userLocationInfo = {
+  private userLocationInfo = {
     userMarker: null,
     userCircle: null,
     userLat: null,
     userLng: null
   };
+
+  public Venues: FourSquareService[];
+  
+  private markers = [];
 
   ngOnInit() {
     this.initMap();
@@ -81,8 +88,40 @@ export class MapComponent implements OnInit {
         });
   }
 
-  searchComplete() {
-    console.log('search');
+  search() {
+    this.fourSquareService
+      .getVenues(51.505, -0.09)
+      .subscribe(
+        response => {
+          this.searchComplete( response );
+        }
+      );    
+  }
+
+  searchComplete( response ) {
+    this.Venues = response;
+    console.log(this.Venues);
+    //https://ss3.4sqi.net/img/categories_v2/parks_outdoors/plaza_bg_44.png
+    this.processData( response.response.venues );
+  }
+
+  processData( venues ) {
+    venues.forEach(venue => {
+      this.addMarker(venue);
+    });
+  }
+
+  addMarker( point ) {
+    console.log( point );
+    var marker = L.marker(
+      [point.location.lat, point.location.lng]
+    ).bindPopup('PUT TEXT HERE');
+
+    console.log( marker );
+    console.log(this.map);
+    debugger;
+
+    this.map.addLayer( marker );
   }
 
 }
