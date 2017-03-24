@@ -137,18 +137,53 @@ export class MapComponent implements OnInit {
     {
       delete(options.icon);
     }
+
+    var popupMessage = 
+      `
+      <div class="popupMessage">
+        <h3>
+          <img 
+            src="${point.categories[0].icon.prefix}bg_44${point.categories[0].icon.suffix}" 
+            style="float: left; margin: 5px;"
+          />
+          ${ point.name }
+          <div class="venue_rating" style="
+          background-color: #${point.ratingColor};
+          height: 30px;
+          width: 30px;
+          font-size: 20px;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          float: right;
+          margin: 5px;
+        ">
+          ${point.rating || "No Ratings Yet."}
+        </div> 
+        </h3>
+        <h4>
+          ${point.categories[0].name}
+        </h4>
+        
+        <Address>
+          <strong>Address:</strong>
+          ${point.location.formattedAddress.join(', ')}
+        </Address>
+        <hr/>
+        <summary>
+          <strong>Here Now: ${point.hereNow.summary}</strong>
+        </summary>
+
+        
+      </div>
+      `
+
+
     var marker = L.marker(
       [point.location.lat, point.location.lng],
       options
     ).bindPopup(
-      `
-      <div>
-        <h3>
-          ${ point.name }
-        </h3>
-        <img src="${point.categories[0].icon.prefix}bg_44${point.categories[0].icon.suffix}" />
-      </div>
-      `
+      popupMessage
     );
 
     return marker;
