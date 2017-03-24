@@ -90,7 +90,7 @@ export class MapComponent implements OnInit {
         })
        .on('locationerror', function(e){
             console.log(e);
-            console.info("Location access denied.");
+            _this.updateResultHeadline("Location access denied.");
         });
   }
 
