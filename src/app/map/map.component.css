@@ -8,3 +8,10 @@
     border-top: solid 1px gray;
     border-bottom: solid 1px grey;
 }
+
+#headline {
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+    color: darkgrey;
+}

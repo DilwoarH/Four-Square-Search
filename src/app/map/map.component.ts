@@ -101,20 +101,32 @@ export class MapComponent implements OnInit {
   }
 
   search( lat = this.defaultSettings.lat, lng = this.defaultSettings.lng, search = "" ) {
+    
+
     this.fourSquareService
-      .getVenues(lat, lng, search)
-      .subscribe(
-        response => {
-          this.searchComplete( response, lat, lng );
-        }
-      );
+    .getVenues(lat, lng, search)
+    .subscribe(
+      response => {
+        this.searchComplete( response, lat, lng );
+      },
+      error => {
+        this.updateResultHeadline( 'Location not found :(' );
+      }
+    );
+    
   }
 
   searchComplete( response, lat, lng ) {
+    this.updateResultHeadline( response.response.headerFullLocation );
     this.processData( response.response.groups[0].items );
     var center_lat =  ( response.response.geocode ? response.response.geocode.center.lat : lat);
     var center_lng =  ( response.response.geocode ? response.response.geocode.center.lng : lng);
     this.map.setView( [ center_lat , center_lng ], this.defaultSettings.zoom );
+  }
+
+  updateResultHeadline( headline )
+  {
+    document.getElementById('headline').innerText = headline;
   }
 
   processData( venues ) {
