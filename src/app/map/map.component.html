@@ -1,10 +1,11 @@
 <div class="search_section">
-  <p>
+  <label for="search">
     Search Location
-  </p>
-  <input id="search" /> 
-  <button id="triggerSearch" (click)="search()">Search</button>
-  <button id="findMe" (click)="findMeBtnClicked()">Use My Location</button>
+  </label>
+  <input id="search" class="form-control" /> 
+  <button id="triggerSearch" (click)="search()" class="btn btn-success">Search</button>
+  <button id="findMe" (click)="findMeBtnClicked()" class="btn btn-info">Use My Location</button>
 </div>
 
 <div id="map"></div>
+

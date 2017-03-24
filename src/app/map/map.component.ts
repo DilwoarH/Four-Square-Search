@@ -141,7 +141,7 @@ export class MapComponent implements OnInit {
     var popupMessage = 
       `
       <div class="popupMessage">
-        <h3>
+        <h5>
           <img 
             src="${point.categories[0].icon.prefix}bg_44${point.categories[0].icon.suffix}" 
             style="float: left; margin: 5px;"
@@ -149,22 +149,22 @@ export class MapComponent implements OnInit {
           ${ point.name }
           <div class="venue_rating" style="
           background-color: #${point.ratingColor};
-          height: 30px;
-          width: 30px;
+          height: 40px;
+          width: 40px;
           font-size: 20px;
           color: white;
-          padding: 10px;
+          padding: 7px;
           text-align: center;
           float: right;
-          margin: 5px;
+          margin: 10px;
         ">
           ${point.rating || "No Ratings Yet."}
         </div> 
-        </h3>
-        <h4>
+        </h5>
+        <strong>
           ${point.categories[0].name}
-        </h4>
-        
+        </strong>
+        <hr/>
         <Address>
           <strong>Address:</strong>
           ${point.location.formattedAddress.join(', ')}
