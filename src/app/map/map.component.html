@@ -1,10 +1,16 @@
 <div class="search_section">
-  <label for="search">
-    Search Location
-  </label>
-  <input id="search" class="form-control" /> 
-  <button id="triggerSearch" (click)="search()" class="btn btn-success">Search</button>
-  <button id="findMe" (click)="findMeBtnClicked()" class="btn btn-info">Use My Location</button>
+  <div class="form-inline">
+
+    <label for="search" class="mr-sm-2 col-form-label">
+      Search Location
+    </label>
+    <div class="mr-sm-2">
+      <input class="form-control" type="text" placeholder="London" id="search">
+    </div>
+  
+  <button id="triggerSearch" (click)="search()" class="btn btn-success mr-sm-2">Search</button>
+  <button id="findMe" (click)="findMeBtnClicked()" class="btn btn-info mr-sm-2">Use My Location</button>
+  </div>
 </div>
 
 <div id="map"></div>

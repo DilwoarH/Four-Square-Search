@@ -38,6 +38,8 @@ export class MapComponent implements OnInit {
       subdomains: 'abcd',
       maxZoom: 19
     }).addTo(this.map);
+
+    this.search();
     
   }
 
