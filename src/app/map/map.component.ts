@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
 
   public Venues: FourSquareService[];
   
-  private markers = [];
+  public cluster;
 
   ngOnInit() {
     this.initMap();
@@ -112,19 +112,24 @@ export class MapComponent implements OnInit {
   processData( venues ) {
     
     //Clean up old markers
-    this.markers.forEach( oldMarker => {
-      this.removeMarker( oldMarker );
-    });
+    if ( this.cluster )
+      this.removeMarker( this.cluster );
+
+    //init cluster
+    this.cluster = L.markerClusterGroup();
 
     //add in new markers
     venues.forEach(venue => {
       this.addMarker(venue.venue);
     });
+
+    this.map.addLayer( this.cluster );
+
   }
 
   addMarker( point ) {
     var marker = this.makeMarker( point );
-    this.map.addLayer( marker );
+    this.cluster.addLayer( marker );
   }
 
   removeMarker( marker ) {
@@ -153,8 +158,6 @@ export class MapComponent implements OnInit {
       </div>
       `
     );
-
-    this.markers.push( marker );
 
     return marker;
   } 
