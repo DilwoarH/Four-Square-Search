@@ -81,6 +81,9 @@ export class MapComponent implements OnInit {
 
             _this.map.addLayer(_this.userLocationInfo.userMarker);
             _this.map.addLayer(_this.userLocationInfo.userCircle);
+            _this.map.setZoom( 15 );
+
+            _this.search( _this.userLocationInfo.userLat, _this.userLocationInfo.userLng );
         })
        .on('locationerror', function(e){
             console.log(e);
@@ -88,40 +91,93 @@ export class MapComponent implements OnInit {
         });
   }
 
-  search() {
+  search( lat = "51.505", lng = "-0.09", search = "" ) {
     this.fourSquareService
-      .getVenues(51.505, -0.09)
+      .getVenues(lat, lng, search)
       .subscribe(
         response => {
-          this.searchComplete( response );
+          this.searchComplete( response, lat, lng );
         }
-      );    
+      );
   }
 
-  searchComplete( response ) {
+  searchComplete( response, lat, lng ) {
     this.Venues = response;
-    console.log(this.Venues);
-    //https://ss3.4sqi.net/img/categories_v2/parks_outdoors/plaza_bg_44.png
-    this.processData( response.response.venues );
+    this.processData( response.response.groups[0].items );
+    var center_lat =  ( response.response.geocode ? response.response.geocode.center.lat : lat);
+    var center_lng =  ( response.response.geocode ? response.response.geocode.center.lng : lng);
+    this.map.setView( [ center_lat , center_lng ], 16 );
   }
 
   processData( venues ) {
+    
+    //Clean up old markers
+    this.markers.forEach( oldMarker => {
+      this.removeMarker( oldMarker );
+    });
+
+    //add in new markers
     venues.forEach(venue => {
-      this.addMarker(venue);
+      this.addMarker(venue.venue);
     });
   }
 
   addMarker( point ) {
-    console.log( point );
-    var marker = L.marker(
-      [point.location.lat, point.location.lng]
-    ).bindPopup('PUT TEXT HERE');
-
-    console.log( marker );
-    console.log(this.map);
-    debugger;
-
+    var marker = this.makeMarker( point );
     this.map.addLayer( marker );
   }
 
+  removeMarker( marker ) {
+    this.map.removeLayer( marker );
+  }
+
+  makeMarker( point ) {
+    let options = {
+      icon: this.makeIcon( point )
+    };
+    
+    if ( options.icon === null)
+    {
+      delete(options.icon);
+    }
+    var marker = L.marker(
+      [point.location.lat, point.location.lng],
+      options
+    ).bindPopup(
+      `
+      <div>
+        <h3>
+          ${ point.name }
+        </h3>
+        <img src="${point.categories[0].icon.prefix}bg_44${point.categories[0].icon.suffix}" />
+      </div>
+      `
+    );
+
+    this.markers.push( marker );
+
+    return marker;
+  } 
+
+  makeIcon( point ) {
+    if ( !point.categories.length )
+    {
+      return null;
+    }
+
+    var myIcon = L.icon({
+        iconUrl: point.categories[0].icon.prefix + "bg_44" + point.categories[0].icon.suffix,
+        //iconRetinaUrl: 'my-icon@2x.png',
+        iconSize: [44, 44],
+        //iconAnchor: [22, 94],
+        //popupAnchor: [-3, -76],
+        //shadowUrl: 'my-icon-shadow.png',
+        //shadowRetinaUrl: 'my-icon-shadow@2x.png',
+        shadowSize: [68, 95],
+        shadowAnchor: [22, 94]
+    });
+    
+
+    return myIcon;
+  }
 }
