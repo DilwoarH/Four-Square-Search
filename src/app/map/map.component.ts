@@ -15,18 +15,15 @@ export class MapComponent implements OnInit {
         public fourSquareService: FourSquareService 
   ) { }
 
+  //map variables
   public map = null;
-  
+  public cluster;
   private userLocationInfo = {
     userMarker: null,
     userCircle: null,
     userLat: null,
     userLng: null
   };
-
-  public Venues: FourSquareService[];
-  
-  public cluster;
 
   ngOnInit() {
     this.initMap();
@@ -41,10 +38,6 @@ export class MapComponent implements OnInit {
       subdomains: 'abcd',
       maxZoom: 19
     }).addTo(this.map);
-
-    /*L.marker([51.5, -0.09]).addTo(this.map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup();*/
     
   }
 
@@ -70,7 +63,7 @@ export class MapComponent implements OnInit {
             
             _this.userLocationInfo.userMarker = L.marker(
               [e.latitude, e.longitude]
-            ).bindPopup('Your are here :)');
+            ).bindPopup('You are here :)');
 
             _this.userLocationInfo.userCircle = L.circle([e.latitude, e.longitude], e.accuracy/2, {
                 weight: 1,
@@ -102,7 +95,6 @@ export class MapComponent implements OnInit {
   }
 
   searchComplete( response, lat, lng ) {
-    this.Venues = response;
     this.processData( response.response.groups[0].items );
     var center_lat =  ( response.response.geocode ? response.response.geocode.center.lat : lat);
     var center_lng =  ( response.response.geocode ? response.response.geocode.center.lng : lng);
@@ -170,12 +162,7 @@ export class MapComponent implements OnInit {
 
     var myIcon = L.icon({
         iconUrl: point.categories[0].icon.prefix + "bg_44" + point.categories[0].icon.suffix,
-        //iconRetinaUrl: 'my-icon@2x.png',
         iconSize: [44, 44],
-        //iconAnchor: [22, 94],
-        //popupAnchor: [-3, -76],
-        //shadowUrl: 'my-icon-shadow.png',
-        //shadowRetinaUrl: 'my-icon-shadow@2x.png',
         shadowSize: [68, 95],
         shadowAnchor: [22, 94]
     });
