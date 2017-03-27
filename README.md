@@ -12,6 +12,18 @@ ng serve;
 Navigate to http://localhost:4200/
 ```
 
+## Third Party Libraries used
+```
+Angular JS - https://angular.io/
+- Used for front end framework.
+
+LeafletJS - http://leafletjs.com/
+- Used for mapping functionalities.
+
+Bootstrap CSS - http://getbootstrap.com
+- Used for styling.
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
