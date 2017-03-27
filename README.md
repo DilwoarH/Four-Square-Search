@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Instructions
 
 ```
-npm install -g @angular/cli;
+sudo npm install -g @angular/cli;
 npm install;
 ng serve;
 
